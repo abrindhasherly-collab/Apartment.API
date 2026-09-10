@@ -1,7 +1,9 @@
 using ApartmentApplication.Interfaces;
+using ApartmentApplication.Interfaces_Service;
 using ApartmentApplication.Mapping;
 using ApartmentApplication.Services;
 using ApartmentDomain.Interfaces;
+using ApartmentDomain.Interfaces_Repository;
 using ApartmentInfrastructure.Data;
 using ApartmentInfrastructure.Repositories;
 using ApartmentInfrastructure.Services;
@@ -93,19 +95,6 @@ var jwtKey =
     builder.Configuration["Jwt:Key"];
 
 if (string.IsNullOrWhiteSpace(jwtKey))
-using ApartmentApplication.Interfaces_Service;
-using ApartmentApplication.Mapping;
-using ApartmentApplication.Services;
-using ApartmentDomain.Interfaces_Repository;
-using ApartmentInfrastructure.Data;
-using ApartmentInfrastructure.Repositories;
-using Microsoft.EntityFrameworkCore;
-
-namespace ApartmentManagement
-{
-    throw new InvalidOperationException(
-        "JWT Key is missing in appsettings.json");
-}
 
 builder.Services.AddAuthentication(
     JwtBearerDefaults.AuthenticationScheme)
@@ -150,14 +139,6 @@ builder.Services.AddCors(options =>
             .AllowAnyMethod();
     });
 });
-
-            builder.Services.AddControllers();
-
-            builder.Services.AddDbContext<ApartmentDbContext>(options =>
-               options.UseSqlServer(
-                   builder.Configuration.GetConnectionString("ApartmentCS")
-               )
-           );
 
             //Repository
 

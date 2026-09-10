@@ -1,7 +1,11 @@
-﻿using ApartmentApplication.DTOs.Flat;
+﻿using ApartmentApplication.DTOs.Building;
+using ApartmentApplication.DTOs.Document;
+using ApartmentApplication.DTOs.Flat;
 using ApartmentApplication.DTOs.Maintenance;
+using ApartmentApplication.DTOs.Notice;
 using ApartmentApplication.DTOs.Parking;
 using ApartmentApplication.DTOs.Staff;
+using ApartmentApplication.DTOs.User;
 using ApartmentDomain.Entities;
 using AutoMapper;
 using System;
@@ -33,6 +37,22 @@ namespace ApartmentApplication.Mapping
             CreateMap<StaffCreateDto, Staff>();
             CreateMap<StaffUpdateDto, Staff>();
             CreateMap<Staff, StaffResponseDto>();
+
+            CreateMap<RegisterUserDto, User>();
+            CreateMap<UpdateUserDto, User>();
+            CreateMap<User, UserResponseDto>();
+
+            CreateMap<CreateBuildingDto, Building>();
+            CreateMap<UpdateBuildingDto, Building>();
+            CreateMap<Building, BuildingResponseDto>();
+
+            CreateMap<CreateNoticeDto, Notice>();
+            CreateMap<UpdateNoticeDto, Notice>();
+            CreateMap<Notice, NoticeResponseDto>();
+
+            CreateMap<CreateDocumentDto, Document>();
+            CreateMap<UpdateDocumentDto, Document>();
+            CreateMap<Document, DocumentResponseDto>();
         }
     }
 }
