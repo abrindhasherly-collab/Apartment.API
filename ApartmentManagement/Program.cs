@@ -1,34 +1,178 @@
+using ApartmentApplication.Interfaces;
+using ApartmentApplication.Mapping;
+using ApartmentApplication.Services;
+using ApartmentDomain.Interfaces;
+using ApartmentInfrastructure.Data;
+using ApartmentInfrastructure.Repositories;
+using ApartmentInfrastructure.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
-namespace ApartmentManagement
+var builder = WebApplication.CreateBuilder(args);
+
+// --------------------------------------------------
+// Controllers
+// --------------------------------------------------
+
+builder.Services.AddControllers();
+
+// --------------------------------------------------
+// OpenAPI
+// --------------------------------------------------
+
+builder.Services.AddOpenApi();
+
+// --------------------------------------------------
+// Database
+// --------------------------------------------------
+
+builder.Services.AddDbContext<ApartmentDbContext>(options =>
 {
-    public class Program
-    {
-        public static void Main(string[] args)
-        {
-            var builder = WebApplication.CreateBuilder(args);
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString(
+            "ApartmentCS"));
+});
 
-            // Add services to the container.
+// --------------------------------------------------
+// AutoMapper
+// --------------------------------------------------
 
-            builder.Services.AddControllers();
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
+// --------------------------------------------------
+// AutoMapper
+// --------------------------------------------------
 
-            var app = builder.Build();
+builder.Services.AddAutoMapper(
+    cfg => { },
+    typeof(MappingProfile).Assembly);
 
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
-            {
-                app.MapOpenApi();
-            }
+// --------------------------------------------------
+// Application Services
+// --------------------------------------------------
 
-            app.UseHttpsRedirection();
+builder.Services.AddScoped<IAuthService, AuthService>();
 
-            app.UseAuthorization();
+builder.Services.AddScoped<IUserService, UserService>();
 
+builder.Services.AddScoped<IBuildingService, BuildingService>();
 
-            app.MapControllers();
+builder.Services.AddScoped<INoticeService, NoticeService>();
 
-            app.Run();
-        }
-    }
+builder.Services.AddScoped<IDocumentService, DocumentService>();
+
+// --------------------------------------------------
+// Repository Services
+// --------------------------------------------------
+
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+
+builder.Services.AddScoped<
+    IBuildingRepository,
+    BuildingRepository>();
+
+builder.Services.AddScoped<
+    INoticeRepository,
+    NoticeRepository>();
+
+builder.Services.AddScoped<
+    IDocumentRepository,
+    DocumentRepository>();
+
+// --------------------------------------------------
+// JWT Service
+// --------------------------------------------------
+
+builder.Services.AddScoped<IJwtService, JwtService>();
+
+// --------------------------------------------------
+// JWT Authentication
+// --------------------------------------------------
+
+var jwtKey =
+    builder.Configuration["Jwt:Key"];
+
+if (string.IsNullOrWhiteSpace(jwtKey))
+{
+    throw new InvalidOperationException(
+        "JWT Key is missing in appsettings.json");
 }
+
+builder.Services.AddAuthentication(
+    JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters =
+            new TokenValidationParameters
+            {
+                ValidateIssuerSigningKey = true,
+
+                IssuerSigningKey =
+                    new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(jwtKey)),
+
+                ValidateIssuer = false,
+
+                ValidateAudience = false,
+
+                ValidateLifetime = true,
+
+                ClockSkew = TimeSpan.Zero
+            };
+    });
+
+// --------------------------------------------------
+// Authorization
+// --------------------------------------------------
+
+builder.Services.AddAuthorization();
+
+// --------------------------------------------------
+// CORS - Angular
+// --------------------------------------------------
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AngularPolicy", policy =>
+    {
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
+// --------------------------------------------------
+// Build application
+// --------------------------------------------------
+
+var app = builder.Build();
+
+// --------------------------------------------------
+// OpenAPI
+// --------------------------------------------------
+
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+}
+
+// --------------------------------------------------
+// Middleware
+// --------------------------------------------------
+
+app.UseHttpsRedirection();
+
+app.UseCors("AngularPolicy");
+
+app.UseAuthentication();
+
+app.UseAuthorization();
+
+// --------------------------------------------------
+// Controllers
+// --------------------------------------------------
+
+app.MapControllers();
+
+app.Run();
