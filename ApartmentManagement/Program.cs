@@ -157,10 +157,84 @@ builder.Services.AddCors(options =>
             //AutoMapper
 
             builder.Services.AddAutoMapper(p => { p.AddProfile<MappingProfile>(); });
+var builder = WebApplication.CreateBuilder(args);
 
+            // Add services to the container.
 
-            // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-            builder.Services.AddOpenApi();
+builder.Services.AddControllers();
+
+// --------------------------------------------------
+// OpenAPI
+// --------------------------------------------------
+
+builder.Services.AddOpenApi();
+
+// --------------------------------------------------
+// Database
+// --------------------------------------------------
+
+builder.Services.AddDbContext<ApartmentDbcontext>(options =>
+{
+    options.UseSqlServer(
+        builder.Configuration.GetConnectionString("ApartmentCS"));
+});
+
+// --------------------------------------------------
+// AutoMapper
+// --------------------------------------------------
+
+builder.Services.AddAutoMapper(
+    cfg => { },
+    typeof(MappingProfile).Assembly);
+
+// --------------------------------------------------
+// Application Services
+// --------------------------------------------------
+
+builder.Services.AddScoped<IResidentService, ResidentService>();
+
+builder.Services.AddScoped<IComplaintService, ComplaintService>();
+
+builder.Services.AddScoped<IPaymentService, PaymentService>();
+
+builder.Services.AddScoped<IEmergencyService, EmergencyService>();
+
+// --------------------------------------------------
+// Repository Services
+// --------------------------------------------------
+
+builder.Services.AddScoped<IResidentRepository, ResidentRepository>();
+
+builder.Services.AddScoped<IComplaintRepository, ComplaintRepository>();
+
+builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
+
+builder.Services.AddScoped<IEmergencyRepository, EmergencyRepository>();
+
+// --------------------------------------------------
+// Authorization
+// --------------------------------------------------
+
+builder.Services.AddAuthorization();
+
+// --------------------------------------------------
+// CORS - Angular
+// --------------------------------------------------
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AngularPolicy", policy =>
+    {
+        policy
+            .AllowAnyOrigin()
+            .AllowAnyHeader()
+            .AllowAnyMethod();
+    });
+});
+
+// --------------------------------------------------
+// Build application
+// --------------------------------------------------
 
 var app = builder.Build();
 
