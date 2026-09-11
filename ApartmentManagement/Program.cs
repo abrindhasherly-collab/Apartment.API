@@ -7,6 +7,9 @@ using ApartmentDomain.Interfaces_Repository;
 using ApartmentInfrastructure.Data;
 using ApartmentInfrastructure.Repositories;
 using ApartmentInfrastructure.Services;
+using ApartmentManagement.Application.Interfaces.Services;
+using ApartmentManagement.Application.Services;
+using ApartmentManagement.Infrastructure.Repositories;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -30,12 +33,12 @@ builder.Services.AddOpenApi();
 // Database
 // --------------------------------------------------
 
-builder.Services.AddDbContext<ApartmentDbContext>(options =>
-{
-    options.UseSqlServer(
-        builder.Configuration.GetConnectionString(
-            "ApartmentCS"));
-});
+//builder.Services.AddDbContext<ApartmentDbContext>(options =>
+//{
+//    options.UseSqlServer(
+//        builder.Configuration.GetConnectionString(
+//            "ApartmentCS"));
+//});
 
 // --------------------------------------------------
 // AutoMapper
@@ -157,7 +160,6 @@ builder.Services.AddCors(options =>
             //AutoMapper
 
             builder.Services.AddAutoMapper(p => { p.AddProfile<MappingProfile>(); });
-var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
 
