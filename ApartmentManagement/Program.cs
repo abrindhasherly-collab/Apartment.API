@@ -161,7 +161,20 @@ builder.Services.AddCors(options =>
 
             builder.Services.AddAutoMapper(p => { p.AddProfile<MappingProfile>(); });
 
-            // Add services to the container.
+            // Add DbContext
+            builder.Services.AddDbContext<ApartmentDbContext>(options =>
+                options.UseSqlServer(
+                    builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            // Register Repositories
+            builder.Services.AddScoped<IVisitorRepository, VisitorRepository>();
+            builder.Services.AddScoped<IParcelDeliveryRepository, ParcelDeliveryRepository>();
+            builder.Services.AddScoped<IFlatTransferRepository, FlatTransferRepository>();
+
+            // Register Services
+            builder.Services.AddScoped<IVisitorService, VisitorService>();
+            builder.Services.AddScoped<IParcelDeliveryService, ParcelDeliveryService>();
+            builder.Services.AddScoped<IFlatTransferService, FlatTransferService>();
 
 builder.Services.AddControllers();
 

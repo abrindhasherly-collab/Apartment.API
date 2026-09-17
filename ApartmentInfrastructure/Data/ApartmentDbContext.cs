@@ -1,5 +1,8 @@
 ﻿using ApartmentDomain.Entities;
 using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace ApartmentInfrastructure.Data
 {
@@ -170,11 +173,14 @@ namespace ApartmentInfrastructure.Data
                 entity.Property(x => x.JobRole)
                       .IsRequired()
                       .HasMaxLength(50);
+        public DbSet<Visitor> Visitors { get; set; }
 
+        public DbSet<ParcelDelivery> ParcelDeliveries { get; set; }
                 entity.Property(x => x.Status)
                       .IsRequired();
             });
 
+        public DbSet<FlatTransfer> FlatTransfers { get; set; }
             modelBuilder.Entity<PaymentEntity>()
             .HasOne<Maintenance>()
             .WithMany()
