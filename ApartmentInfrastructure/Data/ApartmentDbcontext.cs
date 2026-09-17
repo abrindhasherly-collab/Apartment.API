@@ -33,6 +33,12 @@ namespace ApartmentInfrastructure.Data
         public DbSet<Document> Documents { get; set; }
         public DbSet<Staff> Staffs { get; set; }
 
+        public DbSet<Visitor> Visitors { get; set; }
+
+        public DbSet<ParcelDelivery> ParcelDeliveries { get; set; }
+
+        public DbSet<FlatTransfer> FlatTransfers { get; set; }
+
         protected override void OnModelCreating(
             ModelBuilder modelBuilder)
         {
@@ -173,14 +179,12 @@ namespace ApartmentInfrastructure.Data
                 entity.Property(x => x.JobRole)
                       .IsRequired()
                       .HasMaxLength(50);
-        public DbSet<Visitor> Visitors { get; set; }
-
-        public DbSet<ParcelDelivery> ParcelDeliveries { get; set; }
+        
                 entity.Property(x => x.Status)
                       .IsRequired();
             });
 
-        public DbSet<FlatTransfer> FlatTransfers { get; set; }
+        
             modelBuilder.Entity<PaymentEntity>()
             .HasOne<Maintenance>()
             .WithMany()
