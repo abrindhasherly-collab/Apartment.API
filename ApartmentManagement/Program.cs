@@ -161,10 +161,10 @@ builder.Services.AddCors(options =>
 
             builder.Services.AddAutoMapper(p => { p.AddProfile<MappingProfile>(); });
 
-            // Add DbContext
-            builder.Services.AddDbContext<ApartmentDbContext>(options =>
-                options.UseSqlServer(
-                    builder.Configuration.GetConnectionString("DefaultConnection")));
+            //// Add DbContext
+            //builder.Services.AddDbContext<ApartmentDbContext>(options =>
+            //    options.UseSqlServer(
+            //        builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Register Repositories
             builder.Services.AddScoped<IVisitorRepository, VisitorRepository>();
