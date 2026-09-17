@@ -7,9 +7,9 @@ namespace ApartmentInfrastructure.Repositories;
 
 public class DocumentRepository : IDocumentRepository
 {
-    private readonly ApartmentDbContext _context;
+    private readonly ApartmentDbcontext _context;
 
-    public DocumentRepository(ApartmentDbContext context)
+    public DocumentRepository(ApartmentDbcontext context)
     {
         _context = context;
     }

@@ -10,9 +10,9 @@ namespace ApartmentInfrastructure.Repositories
 {
     public class ParkingRepository : IParkingRepository
     {
-        private readonly ApartmentDbContext _context;
+        private readonly ApartmentDbcontext _context;
 
-        public ParkingRepository(ApartmentDbContext context)
+        public ParkingRepository(ApartmentDbcontext context)
         {
             _context = context;
         }

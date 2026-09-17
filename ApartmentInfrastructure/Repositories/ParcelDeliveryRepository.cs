@@ -10,9 +10,9 @@ namespace ApartmentInfrastructure.Repositories
 {
     public class ParcelDeliveryRepository : IParcelDeliveryRepository
     {
-        private readonly ApartmentDbContext _context;
+        private readonly ApartmentDbcontext _context;
 
-        public ParcelDeliveryRepository(ApartmentDbContext context)
+        public ParcelDeliveryRepository(ApartmentDbcontext context)
         {
             _context = context;
         }

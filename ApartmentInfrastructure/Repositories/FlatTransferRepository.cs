@@ -10,9 +10,9 @@ namespace ApartmentInfrastructure.Repositories
 {
     public class FlatTransferRepository : IFlatTransferRepository
     {
-        private readonly ApartmentDbContext _context;
+        private readonly ApartmentDbcontext _context;
 
-        public FlatTransferRepository(ApartmentDbContext context)
+        public FlatTransferRepository(ApartmentDbcontext context)
         {
             _context = context;
         }

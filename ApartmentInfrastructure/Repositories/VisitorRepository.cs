@@ -7,9 +7,9 @@ namespace ApartmentInfrastructure.Repositories
 {
     public class VisitorRepository : IVisitorRepository
     {
-        private readonly ApartmentDbContext _context;
+        private readonly ApartmentDbcontext _context;
 
-        public VisitorRepository(ApartmentDbContext context)
+        public VisitorRepository(ApartmentDbcontext context)
         {
             _context = context;
         }

@@ -7,9 +7,9 @@ namespace ApartmentInfrastructure.Repositories;
 
 public class NoticeRepository : INoticeRepository
 {
-    private readonly ApartmentDbContext _context;
+    private readonly ApartmentDbcontext _context;
 
-    public NoticeRepository(ApartmentDbContext context)
+    public NoticeRepository(ApartmentDbcontext context)
     {
         _context = context;
     }

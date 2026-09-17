@@ -10,9 +10,9 @@ namespace ApartmentInfrastructure.Repositories
 {
     public class MaintenanceRepository : IMaintenanceRepository
     {
-        private readonly ApartmentDbContext _context;
+        private readonly ApartmentDbcontext _context;
 
-        public MaintenanceRepository(ApartmentDbContext context)
+        public MaintenanceRepository(ApartmentDbcontext context)
         {
             _context = context;
         }

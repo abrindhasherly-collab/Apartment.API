@@ -7,9 +7,9 @@ namespace ApartmentInfrastructure.Repositories;
 
 public class UserRepository : IUserRepository
 {
-    private readonly ApartmentDbContext _context;
+    private readonly ApartmentDbcontext _context;
 
-    public UserRepository(ApartmentDbContext context)
+    public UserRepository(ApartmentDbcontext context)
     {
         _context = context;
     }
