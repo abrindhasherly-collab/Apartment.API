@@ -39,10 +39,6 @@ builder.Services.AddDbContext<ApartmentDbContext>(options =>
 // AutoMapper
 // --------------------------------------------------
 
-// --------------------------------------------------
-// AutoMapper
-// --------------------------------------------------
-
 builder.Services.AddAutoMapper(
     cfg => { },
     typeof(MappingProfile).Assembly);
@@ -160,6 +156,8 @@ if (app.Environment.IsDevelopment())
 // --------------------------------------------------
 // Middleware
 // --------------------------------------------------
+
+app.UseStaticFiles();
 
 app.UseHttpsRedirection();
 

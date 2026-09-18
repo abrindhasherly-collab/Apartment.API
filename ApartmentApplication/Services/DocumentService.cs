@@ -9,34 +9,30 @@ namespace ApartmentApplication.Services;
 
 public class DocumentService : IDocumentService
 {
-    private readonly IDocumentRepository _repository;
+    private readonly IDocumentRepository _documentRepository;
     private readonly IMapper _mapper;
 
     public DocumentService(
-        IDocumentRepository repository,
+        IDocumentRepository documentRepository,
         IMapper mapper)
     {
-        _repository = repository;
+        _documentRepository = documentRepository;
         _mapper = mapper;
     }
 
     public async Task<IEnumerable<DocumentResponseDto>> GetAllAsync()
     {
-        var documents = await _repository.GetAllAsync();
+        var documents = await _documentRepository.GetAllAsync();
 
-        return _mapper.Map<IEnumerable<DocumentResponseDto>>(
-            documents);
+        return _mapper.Map<IEnumerable<DocumentResponseDto>>(documents);
     }
 
     public async Task<DocumentResponseDto?> GetByIdAsync(int id)
     {
-        var document =
-            await _repository.GetByIdAsync(id);
+        var document = await _documentRepository.GetByIdAsync(id);
 
         if (document == null)
-        {
             return null;
-        }
 
         return _mapper.Map<DocumentResponseDto>(document);
     }
@@ -44,16 +40,22 @@ public class DocumentService : IDocumentService
     public async Task<DocumentResponseDto> CreateAsync(
         CreateDocumentDto dto)
     {
-        var document =
-            _mapper.Map<Document>(dto);
+        var document = new Document
+        {
+            Title = dto.Title,
+            Description = dto.Description,
+            FileName = dto.FileName,
+            FilePath = dto.FilePath,
+            UploadedBy = dto.UploadedBy,
+            UploadedDate = DateTime.UtcNow,
+            Status = DocumentStatus.Active
+        };
 
-        document.UploadedDate = DateTime.UtcNow;
-        document.Status = DocumentStatus.Active;
+        var createdDocument =
+            await _documentRepository.AddAsync(document);
 
-        var result =
-            await _repository.AddAsync(document);
-
-        return _mapper.Map<DocumentResponseDto>(result);
+        return _mapper.Map<DocumentResponseDto>(
+            createdDocument);
     }
 
     public async Task<DocumentResponseDto?> UpdateAsync(
@@ -61,31 +63,37 @@ public class DocumentService : IDocumentService
         UpdateDocumentDto dto)
     {
         var document =
-            await _repository.GetByIdAsync(id);
+            await _documentRepository.GetByIdAsync(id);
 
         if (document == null)
-        {
             return null;
+
+        document.Title = dto.Title;
+        document.Description = dto.Description;
+        document.Status = dto.Status;
+
+        // Update file only if a new file was selected
+        if (!string.IsNullOrEmpty(dto.FileName))
+        {
+            document.FileName = dto.FileName;
+            document.FilePath = dto.FilePath;
         }
 
-        _mapper.Map(dto, document);
+        await _documentRepository.UpdateAsync(document);
 
-        await _repository.UpdateAsync(document);
-
-        return _mapper.Map<DocumentResponseDto>(document);
+        return _mapper.Map<DocumentResponseDto>(
+            document);
     }
 
     public async Task<bool> DeleteAsync(int id)
     {
         var document =
-            await _repository.GetByIdAsync(id);
+            await _documentRepository.GetByIdAsync(id);
 
         if (document == null)
-        {
             return false;
-        }
 
-        await _repository.DeleteAsync(id);
+        await _documentRepository.DeleteAsync(id);
 
         return true;
     }
