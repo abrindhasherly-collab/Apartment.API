@@ -19,37 +19,37 @@ namespace ApartmentInfrastructure.Repositories
 
         public async Task<IEnumerable<Parking>> GetAllAsync()
         {
-            return await _context.Parkings
+            return await _context.Qwin9Parkings
                 .AsNoTracking()
                 .ToListAsync();
         }
 
         public async Task<Parking?> GetByIdAsync(int id)
         {
-            return await _context.Parkings
+            return await _context.Qwin9Parkings
                 .AsNoTracking()
                 .FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task AddAsync(Parking parking)
         {
-            await _context.Parkings.AddAsync(parking);
+            await _context.Qwin9Parkings.AddAsync(parking);
             await _context.SaveChangesAsync();
         }
 
         public async Task UpdateAsync(Parking parking)
         {
-            _context.Parkings.Update(parking);
+            _context.Qwin9Parkings.Update(parking);
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id)
         {
-            var parking = await _context.Parkings.FindAsync(id);
+            var parking = await _context.Qwin9Parkings.FindAsync(id);
 
             if (parking != null)
             {
-                _context.Parkings.Remove(parking);
+                _context.Qwin9Parkings.Remove(parking);
                 await _context.SaveChangesAsync();
             }
         }

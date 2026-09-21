@@ -16,20 +16,20 @@ public class NoticeRepository : INoticeRepository
 
     public async Task<IEnumerable<Notice>> GetAllAsync()
     {
-        return await _context.Notices
+        return await _context.Qwin9Notices
             .AsNoTracking()
             .ToListAsync();
     }
 
     public async Task<Notice?> GetByIdAsync(int id)
     {
-        return await _context.Notices
+        return await _context.Qwin9Notices
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<Notice> AddAsync(Notice notice)
     {
-        await _context.Notices.AddAsync(notice);
+        await _context.Qwin9Notices.AddAsync(notice);
 
         await _context.SaveChangesAsync();
 
@@ -38,7 +38,7 @@ public class NoticeRepository : INoticeRepository
 
     public async Task UpdateAsync(Notice notice)
     {
-        _context.Notices.Update(notice);
+        _context.Qwin9Notices.Update(notice);
 
         await _context.SaveChangesAsync();
     }
@@ -46,7 +46,7 @@ public class NoticeRepository : INoticeRepository
     public async Task DeleteAsync(int id)
     {
         var notice =
-            await _context.Notices
+            await _context.Qwin9Notices
                 .FirstOrDefaultAsync(x => x.Id == id);
 
         if (notice == null)
@@ -54,7 +54,7 @@ public class NoticeRepository : INoticeRepository
             return;
         }
 
-        _context.Notices.Remove(notice);
+        _context.Qwin9Notices.Remove(notice);
 
         await _context.SaveChangesAsync();
     }

@@ -19,17 +19,17 @@ namespace ApartmentInfrastructure.Repositories
 
         public async Task<IEnumerable<FlatTransfer>> GetAllAsync()
         {
-            return await _context.FlatTransfers.ToListAsync();
+            return await _context.Qwin9FlatTransfers.ToListAsync();
         }
 
         public async Task<FlatTransfer?> GetByIdAsync(int id)
         {
-            return await _context.FlatTransfers.FindAsync(id);
+            return await _context.Qwin9FlatTransfers.FindAsync(id);
         }
 
         public async Task<FlatTransfer> AddAsync(FlatTransfer flatTransfer)
         {
-            await _context.FlatTransfers.AddAsync(flatTransfer);
+            await _context.Qwin9FlatTransfers.AddAsync(flatTransfer);
             await _context.SaveChangesAsync();
 
             return flatTransfer;
@@ -37,17 +37,17 @@ namespace ApartmentInfrastructure.Repositories
 
         public async Task UpdateAsync(FlatTransfer flatTransfer)
         {
-            _context.FlatTransfers.Update(flatTransfer);
+            _context.Qwin9FlatTransfers.Update(flatTransfer);
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id)
         {
-            var flatTransfer = await _context.FlatTransfers.FindAsync(id);
+            var flatTransfer = await _context.Qwin9FlatTransfers.FindAsync(id);
 
             if (flatTransfer != null)
             {
-                _context.FlatTransfers.Remove(flatTransfer);
+                _context.Qwin9FlatTransfers.Remove(flatTransfer);
                 await _context.SaveChangesAsync();
             }
         }

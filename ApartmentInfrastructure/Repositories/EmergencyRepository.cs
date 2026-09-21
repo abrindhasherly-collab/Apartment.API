@@ -16,37 +16,37 @@ public class EmergencyRepository : IEmergencyRepository
 
     public async Task<IEnumerable<EmergencyEntity>> GetAllAsync()
     {
-        return await _context.Emergencies
+        return await _context.Qwin9Emergencies
             .AsNoTracking()
             .ToListAsync();
     }
 
     public async Task<EmergencyEntity?> GetByIdAsync(int id)
     {
-        return await _context.Emergencies
+        return await _context.Qwin9Emergencies
             .FirstOrDefaultAsync(e => e.Id == id);
     }
 
     public async Task AddAsync(EmergencyEntity emergency)
     {
-        await _context.Emergencies.AddAsync(emergency);
+        await _context.Qwin9Emergencies.AddAsync(emergency);
         await _context.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(EmergencyEntity emergency)
     {
-        _context.Emergencies.Update(emergency);
+        _context.Qwin9Emergencies.Update(emergency);
         await _context.SaveChangesAsync();
     }
 
     public async Task DeleteAsync(int id)
     {
-        var emergency = await _context.Emergencies
+        var emergency = await _context.Qwin9Emergencies
             .FirstOrDefaultAsync(e => e.Id == id);
 
         if (emergency != null)
         {
-            _context.Emergencies.Remove(emergency);
+            _context.Qwin9Emergencies.Remove(emergency);
             await _context.SaveChangesAsync();
         }
     }

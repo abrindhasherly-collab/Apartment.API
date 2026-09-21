@@ -16,20 +16,20 @@ public class BuildingRepository : IBuildingRepository
 
     public async Task<IEnumerable<Building>> GetAllAsync()
     {
-        return await _context.Buildings
+        return await _context.Qwin9Buildings
             .AsNoTracking()
             .ToListAsync();
     }
 
     public async Task<Building?> GetByIdAsync(int id)
     {
-        return await _context.Buildings
+        return await _context.Qwin9Buildings
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<Building> AddAsync(Building building)
     {
-        await _context.Buildings.AddAsync(building);
+        await _context.Qwin9Buildings.AddAsync(building);
 
         await _context.SaveChangesAsync();
 
@@ -38,7 +38,7 @@ public class BuildingRepository : IBuildingRepository
 
     public async Task UpdateAsync(Building building)
     {
-        _context.Buildings.Update(building);
+        _context.Qwin9Buildings.Update(building);
 
         await _context.SaveChangesAsync();
     }
@@ -46,7 +46,7 @@ public class BuildingRepository : IBuildingRepository
     public async Task DeleteAsync(int id)
     {
         var building =
-            await _context.Buildings
+            await _context.Qwin9Buildings
                 .FirstOrDefaultAsync(x => x.Id == id);
 
         if (building == null)
@@ -54,7 +54,7 @@ public class BuildingRepository : IBuildingRepository
             return;
         }
 
-        _context.Buildings.Remove(building);
+        _context.Qwin9Buildings.Remove(building);
 
         await _context.SaveChangesAsync();
     }

@@ -16,26 +16,26 @@ public class UserRepository : IUserRepository
 
     public async Task<IEnumerable<User>> GetAllAsync()
     {
-        return await _context.Users
+        return await _context.Qwin9Users
             .AsNoTracking()
             .ToListAsync();
     }
 
     public async Task<User?> GetByIdAsync(int id)
     {
-        return await _context.Users
+        return await _context.Qwin9Users
             .FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public async Task<User?> GetByEmailAsync(string email)
     {
-        return await _context.Users
+        return await _context.Qwin9Users
             .FirstOrDefaultAsync(x => x.Email == email);
     }
 
     public async Task<User> AddAsync(User user)
     {
-        await _context.Users.AddAsync(user);
+        await _context.Qwin9Users.AddAsync(user);
 
         await _context.SaveChangesAsync();
 
@@ -44,7 +44,7 @@ public class UserRepository : IUserRepository
 
     public async Task UpdateAsync(User user)
     {
-        _context.Users.Update(user);
+        _context.Qwin9Users.Update(user);
 
         await _context.SaveChangesAsync();
     }
@@ -52,7 +52,7 @@ public class UserRepository : IUserRepository
     public async Task DeleteAsync(int id)
     {
         var user =
-            await _context.Users
+            await _context.Qwin9Users
                 .FirstOrDefaultAsync(x => x.Id == id);
 
         if (user == null)
@@ -60,7 +60,7 @@ public class UserRepository : IUserRepository
             return;
         }
 
-        _context.Users.Remove(user);
+        _context.Qwin9Users.Remove(user);
 
         await _context.SaveChangesAsync();
     }

@@ -19,17 +19,17 @@ namespace ApartmentInfrastructure.Repositories
 
         public async Task<IEnumerable<ParcelDelivery>> GetAllAsync()
         {
-            return await _context.ParcelDeliveries.ToListAsync();
+            return await _context.Qwin9ParcelDeliveries.ToListAsync();
         }
 
         public async Task<ParcelDelivery?> GetByIdAsync(int id)
         {
-            return await _context.ParcelDeliveries.FindAsync(id);
+            return await _context.Qwin9ParcelDeliveries.FindAsync(id);
         }
 
         public async Task<ParcelDelivery> AddAsync(ParcelDelivery parcelDelivery)
         {
-            await _context.ParcelDeliveries.AddAsync(parcelDelivery);
+            await _context.Qwin9ParcelDeliveries.AddAsync(parcelDelivery);
             await _context.SaveChangesAsync();
 
             return parcelDelivery;
@@ -37,17 +37,17 @@ namespace ApartmentInfrastructure.Repositories
 
         public async Task UpdateAsync(ParcelDelivery parcelDelivery)
         {
-            _context.ParcelDeliveries.Update(parcelDelivery);
+            _context.Qwin9ParcelDeliveries.Update(parcelDelivery);
             await _context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(int id)
         {
-            var parcelDelivery = await _context.ParcelDeliveries.FindAsync(id);
+            var parcelDelivery = await _context.Qwin9ParcelDeliveries.FindAsync(id);
 
             if (parcelDelivery != null)
             {
-                _context.ParcelDeliveries.Remove(parcelDelivery);
+                _context.Qwin9ParcelDeliveries.Remove(parcelDelivery);
                 await _context.SaveChangesAsync();
             }
         }

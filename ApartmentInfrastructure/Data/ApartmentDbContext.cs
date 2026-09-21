@@ -13,31 +13,31 @@ namespace ApartmentInfrastructure.Data
         {
         }
 
-        public DbSet<ResidentEntity> Residents { get; set; }
+        public DbSet<ResidentEntity> Qwin9Residents { get; set; }
 
-        public DbSet<PaymentEntity> Payments { get; set; }
+        public DbSet<PaymentEntity> Qwin9Payments { get; set; }
 
-        public DbSet<ComplaintEntity> Complaints { get; set; }
+        public DbSet<ComplaintEntity> Qwin9Complaints { get; set; }
 
-        public DbSet<EmergencyEntity> Emergencies { get; set; }
+        public DbSet<EmergencyEntity> Qwin9Emergencies { get; set; }
 
-        public DbSet<User> Users { get; set; }
-        public DbSet<Flat> Flats { get; set; }
+        public DbSet<User> Qwin9Users { get; set; }
+        public DbSet<Flat> Qwin9Flats { get; set; }
 
-        public DbSet<Building> Buildings { get; set; }
-        public DbSet<Maintenance> Maintenances { get; set; }
+        public DbSet<Building> Qwin9Buildings { get; set; }
+        public DbSet<Maintenance> Qwin9Maintenances { get; set; }
 
-        public DbSet<Notice> Notices { get; set; }
-        public DbSet<Parking> Parkings { get; set; }
+        public DbSet<Notice> Qwin9Notices { get; set; }
+        public DbSet<Parking> Qwin9Parkings { get; set; }
 
-        public DbSet<Document> Documents { get; set; }
-        public DbSet<Staff> Staffs { get; set; }
+        public DbSet<Document> Qwin9Documents { get; set; }
+        public DbSet<Staff> Qwin9Staffs { get; set; }
 
-        public DbSet<Visitor> Visitors { get; set; }
+        public DbSet<Visitor> Qwin9Visitors { get; set; }
 
-        public DbSet<ParcelDelivery> ParcelDeliveries { get; set; }
+        public DbSet<ParcelDelivery> Qwin9ParcelDeliveries { get; set; }
 
-        public DbSet<FlatTransfer> FlatTransfers { get; set; }
+        public DbSet<FlatTransfer> Qwin9FlatTransfers { get; set; }
 
         protected override void OnModelCreating(
             ModelBuilder modelBuilder)

@@ -18,37 +18,37 @@ public class ComplaintRepository : IComplaintRepository
 
     public async Task<IEnumerable<ComplaintEntity>> GetAllAsync()
     {
-        return await _context.Complaints
+        return await _context.Qwin9Complaints
             .AsNoTracking()
             .ToListAsync();
     }
 
     public async Task<ComplaintEntity?> GetByIdAsync(int id)
     {
-        return await _context.Complaints
+        return await _context.Qwin9Complaints
             .FirstOrDefaultAsync(c => c.Id == id);
     }
 
     public async Task AddAsync(ComplaintEntity complaint)
     {
-        await _context.Complaints.AddAsync(complaint);
+        await _context.Qwin9Complaints.AddAsync(complaint);
         await _context.SaveChangesAsync();
     }
 
     public async Task UpdateAsync(ComplaintEntity complaint)
     {
-        _context.Complaints.Update(complaint);
+        _context.Qwin9Complaints.Update(complaint);
         await _context.SaveChangesAsync();
     }
 
     public async Task DeleteAsync(int id)
     {
-        var complaint = await _context.Complaints
+        var complaint = await _context.Qwin9Complaints
             .FirstOrDefaultAsync(c => c.Id == id);
 
         if (complaint != null)
         {
-            _context.Complaints.Remove(complaint);
+            _context.Qwin9Complaints.Remove(complaint);
             await _context.SaveChangesAsync();
         }
     }
