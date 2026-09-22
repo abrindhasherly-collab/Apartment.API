@@ -1,5 +1,6 @@
 ﻿using ApartmentApplication.DTOs.Parking;
 using ApartmentApplication.Interfaces_Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace ApartmentManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ParkingController : ControllerBase
     {
         private readonly IParkingService _parkingService;
@@ -18,6 +20,7 @@ namespace ApartmentManagement.Controllers
 
         // GET: api/Parking
         [HttpGet]
+        [Authorize(Roles = "Secretary,Resident,Watchman,Owner")]
         public async Task<ActionResult<IEnumerable<ParkingResponseDto>>> GetAll()
         {
             var parking = await _parkingService.GetAllAsync();
@@ -27,6 +30,7 @@ namespace ApartmentManagement.Controllers
 
         // GET: api/Parking/1
         [HttpGet("{id}")]
+        [Authorize(Roles = "Secretary,Resident,Watchman,Owner")]
         public async Task<ActionResult<ParkingResponseDto>> GetById(int id)
         {
             var parking = await _parkingService.GetByIdAsync(id);
@@ -44,6 +48,7 @@ namespace ApartmentManagement.Controllers
 
         // POST: api/Parking
         [HttpPost]
+        [Authorize(Roles = "Secretary")]
         public async Task<ActionResult<ParkingResponseDto>> Create(
             ParkingCreateDto dto)
         {
@@ -57,6 +62,7 @@ namespace ApartmentManagement.Controllers
 
         // PUT: api/Parking/1
         [HttpPut("{id}")]
+        [Authorize(Roles = "Secretary")]
         public async Task<ActionResult<ParkingResponseDto>> Update(
             int id,
             ParkingUpdateDto dto)
@@ -76,6 +82,7 @@ namespace ApartmentManagement.Controllers
 
         // DELETE: api/Parking/1
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Secretary")]
         public async Task<IActionResult> Delete(int id)
         {
             var deleted = await _parkingService.DeleteAsync(id);

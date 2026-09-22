@@ -18,6 +18,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Secretary")]
     public async Task<IActionResult> GetAll()
     {
         var users =
@@ -27,6 +28,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize(Roles = "Secretary")]
     public async Task<IActionResult> GetById(int id)
     {
         var user =
@@ -41,6 +43,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpPut("{id}")]
+    [Authorize(Roles = "Secretary")]
     public async Task<IActionResult> Update(
         int id,
         UpdateUserDto dto)
@@ -57,6 +60,7 @@ public class UsersController : ControllerBase
     }
 
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Secretary")]
     public async Task<IActionResult> Delete(int id)
     {
         var result =

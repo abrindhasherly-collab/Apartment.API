@@ -1,5 +1,6 @@
 ﻿using ApartmentApplication.DTOs;
 using ApartmentApplication.Interfaces_Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace ApartmentManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ResidentController : ControllerBase
     {
         private readonly IResidentService _residentService;
@@ -18,6 +20,7 @@ namespace ApartmentManagement.Controllers
 
         // GET: api/Resident
         [HttpGet]
+        [Authorize(Roles = "Secretary,Resident,Watchman,Owner")]
         public async Task<IActionResult> GetAll()
         {
             var residents = await _residentService.GetAllAsync();
@@ -27,6 +30,7 @@ namespace ApartmentManagement.Controllers
 
         // GET: api/Resident/5
         [HttpGet("{id}")]
+        [Authorize(Roles = "Secretary,Resident,Watchman,Owner")]
         public async Task<IActionResult> GetById(int id)
         {
             var resident = await _residentService.GetByIdAsync(id);
@@ -44,6 +48,7 @@ namespace ApartmentManagement.Controllers
 
         // POST: api/Resident
         [HttpPost]
+        [Authorize(Roles = "Secretary")]
         public async Task<IActionResult> Create(
             [FromBody] CreateResidentDto dto)
         {
@@ -57,6 +62,7 @@ namespace ApartmentManagement.Controllers
 
         // PUT: api/Resident/5
         [HttpPut("{id}")]
+        [Authorize(Roles = "Secretary")]
         public async Task<IActionResult> Update(
             int id,
             [FromBody] UpdateResidentDto dto)
@@ -77,6 +83,7 @@ namespace ApartmentManagement.Controllers
 
         // DELETE: api/Resident/5
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Secretary")]
         public async Task<IActionResult> Delete(int id)
         {
             var deleted =
@@ -95,6 +102,5 @@ namespace ApartmentManagement.Controllers
                 message = "Resident deleted successfully."
             });
         }
-
     }
 }

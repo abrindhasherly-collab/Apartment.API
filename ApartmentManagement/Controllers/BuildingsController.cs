@@ -19,6 +19,7 @@ public class BuildingsController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Secretary,Resident,Watchman,Owner")]
     public async Task<IActionResult> GetAll()
     {
         var buildings =
@@ -28,6 +29,7 @@ public class BuildingsController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize(Roles = "Secretary,Resident,Watchman,Owner")]
     public async Task<IActionResult> GetById(int id)
     {
         var building =

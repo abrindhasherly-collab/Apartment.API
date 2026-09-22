@@ -1,5 +1,6 @@
 ﻿using ApartmentApplication.DTOs.Flat;
 using ApartmentApplication.Interfaces_Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace ApartmentManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class FlatsController : ControllerBase
     {
         private readonly IFlatService _flatService;
@@ -18,6 +20,7 @@ namespace ApartmentManagement.Controllers
 
         // GET: api/Flats
         [HttpGet]
+        [Authorize(Roles = "Secretary,Resident,Watchman,Owner")]
         public async Task<ActionResult<IEnumerable<FlatResponseDto>>> GetAll()
         {
             var flats = await _flatService.GetAllAsync();
@@ -27,6 +30,7 @@ namespace ApartmentManagement.Controllers
 
         // GET: api/Flats/1
         [HttpGet("{id}")]
+        [Authorize(Roles = "Secretary,Resident,Watchman,Owner")]
         public async Task<ActionResult<FlatResponseDto>> GetById(int id)
         {
             var flat = await _flatService.GetByIdAsync(id);
@@ -44,6 +48,7 @@ namespace ApartmentManagement.Controllers
 
         // POST: api/Flats
         [HttpPost]
+        [Authorize(Roles = "Secretary")]
         public async Task<ActionResult<FlatResponseDto>> Create(
             FlatCreateDto dto)
         {
@@ -57,6 +62,7 @@ namespace ApartmentManagement.Controllers
 
         // PUT: api/Flats/1
         [HttpPut("{id}")]
+        [Authorize(Roles = "Secretary")]
         public async Task<ActionResult<FlatResponseDto>> Update(
             int id,
             FlatUpdateDto dto)
@@ -76,6 +82,7 @@ namespace ApartmentManagement.Controllers
 
         // DELETE: api/Flats/1
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Secretary")]
         public async Task<IActionResult> Delete(int id)
         {
             var deleted = await _flatService.DeleteAsync(id);
