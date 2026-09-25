@@ -24,6 +24,7 @@ public class DocumentsController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Secretary,Resident,Owner")]
     public async Task<IActionResult> GetAll()
     {
         var documents =
@@ -33,6 +34,7 @@ public class DocumentsController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize(Roles = "Secretary,Resident,Owner")]
     public async Task<IActionResult> GetById(int id)
     {
         var document =

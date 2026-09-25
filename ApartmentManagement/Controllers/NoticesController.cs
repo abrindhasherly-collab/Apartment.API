@@ -18,6 +18,7 @@ public class NoticesController : ControllerBase
     }
 
     [HttpGet]
+    [Authorize(Roles = "Secretary,Resident,Watchman,Owner")]
     public async Task<IActionResult> GetAll()
     {
         var notices =
@@ -27,6 +28,7 @@ public class NoticesController : ControllerBase
     }
 
     [HttpGet("{id}")]
+    [Authorize(Roles = "Secretary,Resident,Watchman,Owner")]
     public async Task<IActionResult> GetById(int id)
     {
         var notice =

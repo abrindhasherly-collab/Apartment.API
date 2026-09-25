@@ -1,11 +1,13 @@
 ﻿using ApartmentManagement.Application.DTOs.Payment;
 using ApartmentManagement.Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApartmentManagement.API.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
+[Authorize]
 public class PaymentController : ControllerBase
 {
     private readonly IPaymentService _paymentService;
@@ -17,6 +19,7 @@ public class PaymentController : ControllerBase
 
     // GET: api/Payment
     [HttpGet]
+    [Authorize(Roles = "Secretary,Resident,Owner")]
     public async Task<IActionResult> GetAll()
     {
         var payments = await _paymentService.GetAllAsync();
@@ -26,6 +29,7 @@ public class PaymentController : ControllerBase
 
     // GET: api/Payment/5
     [HttpGet("{id}")]
+    [Authorize(Roles = "Secretary,Resident,Owner")]
     public async Task<IActionResult> GetById(int id)
     {
         var payment = await _paymentService.GetByIdAsync(id);
@@ -43,6 +47,7 @@ public class PaymentController : ControllerBase
 
     // POST: api/Payment
     [HttpPost]
+    [Authorize(Roles = "Secretary,Resident")]
     public async Task<IActionResult> Create(
         [FromBody] CreatePaymentDto dto)
     {
@@ -66,6 +71,7 @@ public class PaymentController : ControllerBase
 
     // PUT: api/Payment/5
     [HttpPut("{id}")]
+    [Authorize(Roles = "Secretary")]
     public async Task<IActionResult> Update(
         int id,
         [FromBody] UpdatePaymentDto dto)
@@ -95,6 +101,7 @@ public class PaymentController : ControllerBase
 
     // DELETE: api/Payment/5
     [HttpDelete("{id}")]
+    [Authorize(Roles = "Secretary")]
     public async Task<IActionResult> Delete(int id)
     {
         var deleted = await _paymentService.DeleteAsync(id);

@@ -1,5 +1,6 @@
 ﻿using ApartmentApplication.DTOs.Staff;
 using ApartmentApplication.Interfaces_Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -7,6 +8,7 @@ namespace ApartmentManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class StaffController : ControllerBase
     {
         private readonly IStaffService _staffService;
@@ -18,6 +20,7 @@ namespace ApartmentManagement.Controllers
 
         // GET: api/Staff
         [HttpGet]
+        [Authorize(Roles = "Secretary,Resident,Watchman,Owner")]
         public async Task<ActionResult<IEnumerable<StaffResponseDto>>> GetAll()
         {
             var staff = await _staffService.GetAllAsync();
@@ -27,6 +30,7 @@ namespace ApartmentManagement.Controllers
 
         // GET: api/Staff/1
         [HttpGet("{id}")]
+        [Authorize(Roles = "Secretary,Resident,Watchman,Owner")]
         public async Task<ActionResult<StaffResponseDto>> GetById(int id)
         {
             var staff = await _staffService.GetByIdAsync(id);
@@ -44,6 +48,7 @@ namespace ApartmentManagement.Controllers
 
         // POST: api/Staff
         [HttpPost]
+        [Authorize(Roles = "Secretary")]
         public async Task<ActionResult<StaffResponseDto>> Create(
             StaffCreateDto dto)
         {
@@ -57,6 +62,7 @@ namespace ApartmentManagement.Controllers
 
         // PUT: api/Staff/1
         [HttpPut("{id}")]
+        [Authorize(Roles = "Secretary")]
         public async Task<ActionResult<StaffResponseDto>> Update(
             int id,
             StaffUpdateDto dto)
@@ -76,6 +82,7 @@ namespace ApartmentManagement.Controllers
 
         // DELETE: api/Staff/1
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Secretary")]
         public async Task<IActionResult> Delete(int id)
         {
             var deleted = await _staffService.DeleteAsync(id);

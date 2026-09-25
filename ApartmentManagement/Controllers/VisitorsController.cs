@@ -1,11 +1,13 @@
 ﻿using ApartmentApplication.DTOs.Visitor;
 using ApartmentApplication.Interfaces_Service;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApartmentManagement.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class VisitorsController : ControllerBase
     {
         private readonly IVisitorService _visitorService;
@@ -17,6 +19,7 @@ namespace ApartmentManagement.Controllers
 
         // GET: api/Visitors
         [HttpGet]
+        [Authorize(Roles = "Secretary,Resident,Watchman,Owner")]
         public async Task<IActionResult> GetAll()
         {
             var visitors = await _visitorService.GetAllAsync();
@@ -25,6 +28,7 @@ namespace ApartmentManagement.Controllers
 
         // GET: api/Visitors/1
         [HttpGet("{id}")]
+        [Authorize(Roles = "Secretary,Resident,Watchman,Owner")]
         public async Task<IActionResult> GetById(int id)
         {
             var visitor = await _visitorService.GetByIdAsync(id);
@@ -37,6 +41,7 @@ namespace ApartmentManagement.Controllers
 
         // POST: api/Visitors
         [HttpPost]
+        [Authorize(Roles = "Secretary,Resident,Watchman")]
         public async Task<IActionResult> Create(CreateVisitorDto dto)
         {
             var visitor = await _visitorService.CreateAsync(dto);
@@ -49,6 +54,7 @@ namespace ApartmentManagement.Controllers
 
         // PUT: api/Visitors/1
         [HttpPut("{id}")]
+        [Authorize(Roles = "Secretary,Watchman")]
         public async Task<IActionResult> Update(int id, UpdateVisitorDto dto)
         {
             var result = await _visitorService.UpdateAsync(id, dto);
@@ -61,6 +67,7 @@ namespace ApartmentManagement.Controllers
 
         // DELETE: api/Visitors/1
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Secretary,Watchman")]
         public async Task<IActionResult> Delete(int id)
         {
             var result = await _visitorService.DeleteAsync(id);
