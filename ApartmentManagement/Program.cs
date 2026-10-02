@@ -144,23 +144,33 @@ builder.Services.AddScoped<
     FlatTransferService>();
 
 // Resident
-builder.Services.AddScoped<IResidentService, ResidentService>();
+builder.Services.AddScoped<
+    IResidentService,
+    ResidentService>();
 
 // Complaint
-builder.Services.AddScoped<IComplaintService, ComplaintService>();
+builder.Services.AddScoped<
+    IComplaintService,
+    ComplaintService>();
 
 // Payment
-builder.Services.AddScoped<IPaymentService, PaymentService>();
+builder.Services.AddScoped<
+    IPaymentService,
+    PaymentService>();
 
 // Emergency
-builder.Services.AddScoped<IEmergencyService, EmergencyService>();
+builder.Services.AddScoped<
+    IEmergencyService,
+    EmergencyService>();
 
 // ==================================================
 // Repositories
 // ==================================================
 
 // User
-builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<
+    IUserRepository,
+    UserRepository>();
 
 // Building
 builder.Services.AddScoped<
@@ -178,7 +188,9 @@ builder.Services.AddScoped<
     DocumentRepository>();
 
 // Flat
-builder.Services.AddScoped<IFlatRepository, FlatRepository>();
+builder.Services.AddScoped<
+    IFlatRepository,
+    FlatRepository>();
 
 // Maintenance
 builder.Services.AddScoped<
@@ -191,7 +203,9 @@ builder.Services.AddScoped<
     ParkingRepository>();
 
 // Staff
-builder.Services.AddScoped<IStaffRepository, StaffRepository>();
+builder.Services.AddScoped<
+    IStaffRepository,
+    StaffRepository>();
 
 // Visitor
 builder.Services.AddScoped<
@@ -262,6 +276,7 @@ if (app.Environment.IsDevelopment())
 // Middleware
 // ==================================================
 
+// Allows files inside wwwroot to be opened from browser
 app.UseStaticFiles();
 
 app.UseHttpsRedirection();
